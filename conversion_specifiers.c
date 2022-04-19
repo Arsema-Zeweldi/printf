@@ -1,7 +1,5 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
+#include <unistd.h>
 /**
  * print_char - prints characters
  * @arg: argument
@@ -9,10 +7,7 @@
  */
 int print_char(va_list arg)
 {
-	int c;
-
-	c = va_arg(arg, int);
-	return (_putchar(c));
+	return (_putchar(va_arg(arg, int)));
 }
 /**
  * print_int - prints integers
