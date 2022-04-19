@@ -32,12 +32,12 @@ int conversion_specifiers(char n, va_list arg)
  */
 int _printf(const char *format, ...)
 {
-	int i = 0,c = 0;
+	int i = 0, c = 0;
 	unsigned int n;
 	va_list arg;
 
 	va_start(arg, format);
-	if(format == NULL)
+	if (format == NULL)
 		return (-1);
 	for (n = 0; format[n] != '\0'; n++)
 	{
