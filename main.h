@@ -10,6 +10,7 @@ int _printf(const char *format, ...);
 int print_char(va_list arg);
 int print_int(va_list arg);
 int print_str(va_list arg);
+void print_perc(va_list arg, char *buffer, int *index);
 
 /**
  * struct specifiersStruct - specifier definition
