@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "main.h"
+#include <unistd.h>
 /**
  * _putchar - prints
  * @c: character to be printed
@@ -8,5 +6,5 @@
  */
 int _putchar(char c)
 {
-	return (wrtie(1, &c, 1));
+	return (write(1, &c, 1));
 }

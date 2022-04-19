@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #include "main.h"
 /**
  * conversion_specifiers - indicates what and how to print
