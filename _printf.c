@@ -15,6 +15,12 @@ int conversion_specifiers(char n, va_list arg)
 		{"s", print_str},
 		{"d", print_int},
 		{"i", print_int},
+		{"b", print_unsigned_binary},
+		{"u", print_unsigned},
+		{"o", print_oct},
+		{"x", print_hex},
+		{"X", print_HEX},
+		{"S", print_STR},
 		{NULL, NULL}
 	};
 
