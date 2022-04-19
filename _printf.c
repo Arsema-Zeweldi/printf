@@ -11,7 +11,6 @@ int conversion_specifiers(char n, va_list arg)
 	int c;
 
 	specifiersStruct functions[] = {
-		{"%", print_perc},
 		{"c", print_char},
 		{"s", print_str},
 		{"d", print_int},

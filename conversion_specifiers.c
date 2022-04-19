@@ -1,17 +1,6 @@
 #include "main.h"
 #include <unistd.h>
 /**
- * print_perc - percent
- * @arg: argument
- * @buffer: write to buffer
- * @index: index
- */
-void print_perc(__attribute__((unused))va_list arg, char *buffer, int *index)
-{
-	buffer[*index] = '%';
-	*index += 1;
-}
-/**
  * print_char - prints characters
  * @arg: argument
  * Return: int
