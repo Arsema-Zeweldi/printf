@@ -20,11 +20,11 @@ int _printf(const char *format, ...)
 		{"x", _print_hex_l},
 		{"X", _print_hex_u},
 		{"p", _print_address},
-		{NULL, NULL}
-	};
-	va_list ap;
-	int count = 0;
-
+    {NULL, NULL}
+  };
+  va_list ap;
+  int count = 0;
+  
 	va_start(ap, format);
 	count = get_print(format, argument, ap);
 	va_end(ap);
