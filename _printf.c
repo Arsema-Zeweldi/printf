@@ -1,78 +1,32 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "main.h"
-/**
- * conversion_specifiers - indicates what and how to print
- * @n: character
- * Return: int
- */
-int conversion_specifiers(char n, va_list arg)
-{
-	int c;
 
-	specifiersStruct functions[] = {
-		{"c", print_char},
-		{"s", print_str},
-		{"d", print_int},
-		{"i", print_int},
-		{"b", print_unsigned_binary},
-		{"u", print_unsigned},
-		{"o", print_oct},
-		{"x", print_hex},
-		{"X", print_HEX},
-		{"S", print_STR},
-		{NULL, NULL}
-	};
-
-	for (c = 0; functions[c].specifiers != NULL; c++)
-	{
-		if (functions[c].specifiers[0] == n)
-			return (functions[c].printer(arg));
-	}
-	return (0);
-}
 /**
- * _printf - prints
- * @format: character string
- * Return: int
+ * _printf - function that replicates what printf does
+ * @format: a character string
+ *
+ * Return:  the number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	int i = 0, c = 0;
-	unsigned int n;
-	va_list arg;
-
-	va_start(arg, format);
-	if (format == NULL)
-		return (-1);
-	for (n = 0; format[n] != '\0'; n++)
-	{
-		if (format[n] != '%')
-		{
-			_putchar(format[n]);
-			c++;
-			continue;
-		}
-		if (format[n + 1] == '%')
-		{
-			_putchar('%');
-			c++;
-			n++;
-		}
-		if (format[n + 1] == '\0')
-			return (-1);
-
-		i = conversion_specifiers(format[n + 1], arg);
-		if (i == -1 || i != 0)
-			n++;
-		if (i > 0)
-			c += i;
-		if (i == 0)
-		{
-			_putchar('%');
-			c++;
-		}
-	}
-	va_end(arg);
-	return (c);
+	print_type argument[] = {
+		{"c", _print_char},
+		{"s", _print_string},
+		{"%", _print_percent},
+		{"d", _print_int},
+		{"i", _print_int},
+		{"b", _print_binary},
+		{"u", _print_unsigned},
+		{"o", _print_octal},
+		{"x", _print_hex_l},
+		{"X", _print_hex_u},
+		{"p", _print_address},
+    {NULL, NULL}
+  };
+  va_list ap;
+  int count = 0;
+  
+	va_start(ap, format);
+	count = get_print(format, argument, ap);
+	va_end(ap);
+	return (count);
 }
