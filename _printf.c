@@ -1,23 +1,26 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "main.h"
-/**
- * conversion_specifiers - indicates what and how to print
- * @arg: argument
- * @n: character
- * Return: int
- */
-int conversion_specifiers(char n, va_list arg)
-{
-	int c;
+#include <stdlib.h>
+#include <stdio.h>
 
-	specifiersStruct functions[] = {
+/**
+ * printIdentifiers - prints special characters
+ * @next: character after the %
+ * @arg: argument for the indentifier
+ * Return: the number of characters printed
+ * (excluding the null byte used to end output to strings)
+ */
+
+int printIdentifiers(char next, va_list arg)
+{
+	int functsIndex;
+
+	identifierStruct functs[] = {
 		{"c", print_char},
 		{"s", print_str},
 		{"d", print_int},
 		{"i", print_int},
-		{"b", print_unsigned_binary},
 		{"u", print_unsigned},
+		{"b", print_unsignedToBinary},
 		{"o", print_oct},
 		{"x", print_hex},
 		{"X", print_HEX},
@@ -25,55 +28,65 @@ int conversion_specifiers(char n, va_list arg)
 		{NULL, NULL}
 	};
 
-	for (c = 0; functions[c].specifiers != NULL; c++)
+	for (functsIndex = 0; functs[functsIndex].indentifier != NULL; functsIndex++)
 	{
-		if (functions[c].specifiers[0] == n)
-			return (functions[c].printer(arg));
+		if (functs[functsIndex].indentifier[0] == next)
+			return (functs[functsIndex].printer(arg));
 	}
 	return (0);
 }
+
 /**
- * _printf - prints
- * @format: character string
- * Return: int
+ * _printf - mimic printf from stdio
+ * Description: produces output according to a format
+ * write output to stdout, the standard output stream
+ * @format: character string composed of zero or more directives
+ *
+ * Return: the number of characters printed
+ * (excluding the null byte used to end output to strings)
+ * return -1 for incomplete identifier error
  */
+
 int _printf(const char *format, ...)
 {
-	int i = 0, c = 0;
-	unsigned int n;
+	unsigned int i;
+	int identifierPrinted = 0, charPrinted = 0;
 	va_list arg;
 
 	va_start(arg, format);
 	if (format == NULL)
 		return (-1);
-	for (n = 0; format[n] != '\0'; n++)
+
+	for (i = 0; format[i] != '\0'; i++)
 	{
-		if (format[n] != '%')
+		if (format[i] != '%')
 		{
-			_putchar(format[n]);
-			c++;
+			_putchar(format[i]);
+			charPrinted++;
 			continue;
 		}
-		if (format[n + 1] == '%')
+		if (format[i + 1] == '%')
 		{
 			_putchar('%');
-			c++;
-			n++;
+			charPrinted++;
+			i++;
+			continue;
 		}
-		if (format[n + 1] == '\0')
+		if (format[i + 1] == '\0')
 			return (-1);
 
-		i = conversion_specifiers(format[n + 1], arg);
-		if (i == -1 || i != 0)
-			n++;
-		if (i > 0)
-			c += i;
-		if (i == 0)
+		identifierPrinted = printIdentifiers(format[i + 1], arg);
+		if (identifierPrinted == -1 || identifierPrinted != 0)
+			i++;
+		if (identifierPrinted > 0)
+			charPrinted += identifierPrinted;
+
+		if (identifierPrinted == 0)
 		{
 			_putchar('%');
-			c++;
+			charPrinted++;
 		}
 	}
 	va_end(arg);
-	return (c);
+	return (charPrinted);
 }
